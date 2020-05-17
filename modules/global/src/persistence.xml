@@ -9,6 +9,7 @@
     <persistence-unit name="thesis-cars"
                       transaction-type="RESOURCE_LOCAL">
         <class>com.egorl.thesiscars.entity.CarMake</class>
+        <class>com.egorl.thesiscars.entity.Car</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
     </persistence-unit>
 </persistence>

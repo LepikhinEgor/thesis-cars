@@ -4,5 +4,13 @@
         <entity class="com.egorl.thesiscars.entity.CarMake">
             <include re=".*"/>
         </entity>
+        <entity class="com.egorl.thesiscars.entity.Car">
+            <include re=".*"/>
+            <include name="attachments.file"/>
+            <include name="assignments.attachments.file"/>
+            <exclude name="jbpmProcessId"/>
+            <exclude name="parentCard"/>
+            <exclude name="subCards"/>
+        </entity>
     </entities>
 </fts-config>

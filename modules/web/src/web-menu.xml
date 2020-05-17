@@ -2,6 +2,7 @@
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
     <menu id="application"
           insertBefore="administration">
+        <item id="cars$Car.lookup"/>
     </menu>
     <item id="cars$CarMake.lookup"
           insertAfter="ts$SubscriberEdm.browse"/>

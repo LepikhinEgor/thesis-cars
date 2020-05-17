@@ -6,4 +6,37 @@
     <view class="com.egorl.thesiscars.entity.CarMake"
           extends="_local"
           name="carMake-edit"/>
+    <view class="com.egorl.thesiscars.entity.Car"
+          extends="_local"
+          name="browse">
+        <property name="carMake"
+                  view="_local"/>
+        <property name="createTs"/>
+        <property name="proc"
+                  view="_local"/>
+        <property name="substitutedCreator"
+                  view="_minimal"/>
+    </view>
+    <view class="com.egorl.thesiscars.entity.Car"
+          extends="_local"
+          name="edit">
+        <property name="carMake"
+                  view="_local"/>
+        <property name="proc"
+                  view="_local"/>
+        <property name="procs"
+                  view="card-edit"/>
+        <property name="cardAdditionalInfo"
+                  view="_local"/>
+        <property name="attachments"
+                  view="card-edit"/>
+        <property name="roles"
+                  view="card-edit"/>
+        <property name="parentCard"
+                  view="card-tree-for-parent"/>
+        <property name="substitutedCreator"
+                  view="user-minimal"/>
+        <property name="category"
+                  view="_minimal"/>
+    </view>
 </views>

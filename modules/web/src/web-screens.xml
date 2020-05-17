@@ -7,4 +7,10 @@
             template="com/egorl/thesiscars/web/carmake/carmake-browse.xml"/>
     <screen id="cars$CarMake.browse"
             template="com/egorl/thesiscars/web/carmake/carmake-browse.xml"/>
+    <screen id="cars$Car.edit"
+            template="com/egorl/thesiscars/web/car/car-edit.xml"/>
+    <screen id="cars$Car.lookup"
+            template="com/egorl/thesiscars/web/car/car-browse.xml"/>
+    <screen id="cars$Car.browse"
+            template="com/egorl/thesiscars/web/car/car-browse.xml"/>
 </screen-config>
