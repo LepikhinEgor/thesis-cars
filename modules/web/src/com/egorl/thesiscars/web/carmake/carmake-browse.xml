@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.egorl.thesiscars.web.carmake.CarMakeBrowse"
+        lookupComponent="carMakeTable"
+        messagesPack="com.egorl.thesiscars.web.carmake">
+    <dsContext>
+        <collectionDatasource id="carMakeDs"
+                              class="com.egorl.thesiscars.entity.CarMake"
+                              view="carMake-browse">
+            <query>
+                <![CDATA[select e from cars$CarMake e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <layout expand="carMakeTable"
+            spacing="true">
+        <filter id="genericFilter"
+                applyTo="carMakeTable"
+                datasource="carMakeDs"
+                stylename="edit-area">
+            <properties include=".*"/>
+        </filter>
+        <table id="carMakeTable"
+               multiselect="true"
+               presentations="true"
+               width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="note"/>
+                <column id="code"/>
+                <column id="name"/>
+            </columns>
+            <rows datasource="carMakeDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="carMakeTable.create"/>
+                <button id="editBtn"
+                        action="carMakeTable.edit"/>
+                <button id="removeBtn"
+                        action="carMakeTable.remove"/>
+            </buttonsPanel>
+        </table>
+    </layout>
+</window>

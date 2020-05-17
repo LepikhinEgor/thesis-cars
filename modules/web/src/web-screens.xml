@@ -1,5 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <screen-config xmlns="http://schemas.haulmont.com/cuba/screens.xsd">
-
     <include file="/screens.xml"/>
-
+    <screen id="cars$CarMake.edit"
+            template="com/egorl/thesiscars/web/carmake/carmake-edit.xml"/>
+    <screen id="cars$CarMake.lookup"
+            template="com/egorl/thesiscars/web/carmake/carmake-browse.xml"/>
+    <screen id="cars$CarMake.browse"
+            template="com/egorl/thesiscars/web/carmake/carmake-browse.xml"/>
 </screen-config>

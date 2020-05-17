@@ -1,5 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <fts-config>
     <entities>
+        <entity class="com.egorl.thesiscars.entity.CarMake">
+            <include re=".*"/>
+        </entity>
     </entities>
 </fts-config>
