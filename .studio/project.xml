@@ -2,4 +2,6 @@
 <project>
     <class name="com.egorl.thesiscars.entity.Car"
            numeratorPrefix="CAR"/>
+    <class name="com.egorl.thesiscars.entity.CarPurchaseRequest"
+           numeratorPrefix="CPR"/>
 </project>

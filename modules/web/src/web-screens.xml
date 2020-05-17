@@ -13,4 +13,12 @@
             template="com/egorl/thesiscars/web/car/car-browse.xml"/>
     <screen id="cars$Car.browse"
             template="com/egorl/thesiscars/web/car/car-browse.xml"/>
+    <screen id="cars$CarPurchaseRequest.templateBrowse"
+            template="com/egorl/thesiscars/web/carpurchaserequest/carpurchaserequest-template-browse.xml"/>
+    <screen id="cars$CarPurchaseRequest.edit"
+            template="com/egorl/thesiscars/web/carpurchaserequest/carpurchaserequest-edit.xml"/>
+    <screen id="cars$CarPurchaseRequest.lookup"
+            template="com/egorl/thesiscars/web/carpurchaserequest/carpurchaserequest-browse.xml"/>
+    <screen id="cars$CarPurchaseRequest.browse"
+            template="com/egorl/thesiscars/web/carpurchaserequest/carpurchaserequest-browse.xml"/>
 </screen-config>

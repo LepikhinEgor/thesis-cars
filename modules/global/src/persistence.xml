@@ -10,6 +10,7 @@
                       transaction-type="RESOURCE_LOCAL">
         <class>com.egorl.thesiscars.entity.CarMake</class>
         <class>com.egorl.thesiscars.entity.Car</class>
+        <class>com.egorl.thesiscars.entity.CarPurchaseRequest</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
     </persistence-unit>
 </persistence>

@@ -12,5 +12,14 @@
             <exclude name="parentCard"/>
             <exclude name="subCards"/>
         </entity>
+        <entity class="com.egorl.thesiscars.entity.CarPurchaseRequest">
+            <include re=".*"/>
+            <include name="attachments.file"/>
+            <include name="assignments.attachments.file"/>
+            <exclude name="jbpmProcessId"/>
+            <exclude name="parentCard"/>
+            <exclude name="subCards"/>
+            <searchableIf>entity.versionOf == null</searchableIf>
+        </entity>
     </entities>
 </fts-config>

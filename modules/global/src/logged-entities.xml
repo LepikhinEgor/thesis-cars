@@ -5,4 +5,5 @@
         <property logged="false"
                   name="parentCardAccess"/>
     </entity>
+    <entity metaClass="cars$CarPurchaseRequest"/>
 </entities>
