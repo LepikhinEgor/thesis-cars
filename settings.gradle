@@ -1,0 +1,15 @@
+/*
+ * Copyright (c) 2019 Haulmont Technology Ltd. All Rights Reserved.
+ * Haulmont Technology proprietary and confidential.
+ * Use is subject to license terms.
+ */
+
+rootProject.name = 'thesis-cars'
+include(':cars-global', ':cars-core', ':cars-gui',
+        ':cars-web', ':cars-portal', ':cars-mobile', ':cars-mobile-rest')
+project(':cars-global').projectDir = new File(settingsDir, 'modules/global')
+project(':cars-core').projectDir = new File(settingsDir, 'modules/core')
+project(':cars-gui').projectDir = new File(settingsDir, 'modules/gui')
+project(':cars-web').projectDir = new File(settingsDir, 'modules/web')
+project(':cars-portal').projectDir = new File(settingsDir, 'modules/portal')
+project(':cars-mobile-rest').projectDir = new File(settingsDir, 'modules/mobile-rest')
