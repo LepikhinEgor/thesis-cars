@@ -29,15 +29,16 @@ public class ContractorRequestsServiceBean implements ContractorRequestsService 
     Metadata metadata;
 
     @Override
+    @Transactional
     public List<CarPurchaseRequest> getContractorPurchaseRequests(Contractor contractor) {
         EntityManager em = persistence.getEntityManager();
         TypedQuery<CarPurchaseRequest> query = em.createQuery(
-                "select cr.credit from credit$CreditRequest cr where c.borrower.id = :borrowerId",
+                "select cr from cars$CarPurchaseRequest cr where cr.buyer.id = :buyerId",
                 CarPurchaseRequest.class);
-        query.setParameter("borrowerId", contractor);
+        query.setParameter("buyerId", contractor);
         query.setView(metadata.getViewRepository().getView(contractor.getMetaClass(), View.LOCAL));
 
         return query.getResultList();
     }
-    
+
 }

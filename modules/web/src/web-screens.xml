@@ -21,4 +21,8 @@
             template="com/egorl/thesiscars/web/carpurchaserequest/carpurchaserequest-browse.xml"/>
     <screen id="cars$CarPurchaseRequest.browse"
             template="com/egorl/thesiscars/web/carpurchaserequest/carpurchaserequest-browse.xml"/>
+    <screen id="df$Individual.browse"
+            template="com/egorl/thesiscars/web/individualbrowse/ext-individual-browse.xml"/>
+    <screen id="df$Company.browse"
+            template="com/egorl/thesiscars/web/companybrowse/ext-company-browse.xml"/>
 </screen-config>
