@@ -78,57 +78,57 @@ public class ExtDeployer extends AbstractDeployer implements ExtDeployerMBean {
         });
     }
 
-    @Override
-    @Authenticated // TO DO
-    public String deployApprovalProcess() {
-        String result = deployProcesses(Collections.singletonList("Утверждения заявки"));
-        persistence.createTransaction().execute(new Transaction.Callable<Object>() {
-            @Override
-            public Object call(EntityManager em) {
-                Proc proc = (Proc) em.createQuery("select p from wf$Proc p where p.name = :name").setParameter("name", "Утверждения заявки").setView(Proc.class, "edit").getFirstResult();
-                if (proc != null) {
-                    Role roleInitiator = (Role) em.createQuery("select r from sec$Role r where r.name='invoice_initiator'").getFirstResult();
-
-                    Role roleEndorsement = (Role) em.createQuery("select r from sec$Role r where r.name='invoice_endorsement'").getFirstResult();
-                    Role roleApprover = (Role) em.createQuery("select r from sec$Role r where r.name='invoice_approver'").getFirstResult();
-                    for (ProcRole procRole : proc.getRoles()) {
-                        switch (procRole.getCode()) {
-                            case "Инициатор":
-                                procRole.setRole(roleInitiator);
-                                procRole.setSortOrder(0);
-
-                                TsDefaultProcActor defaultProcActor = (TsDefaultProcActor) em.createQuery("select dpa from ts$DefaultProcActor dpa where dpa.strategyId =:strategy and dpa.procRole.id = :procRole").setParameter("strategy", CardAuthorProcessActorStrategy.NAME).setParameter("procRole", procRole.getId()).getFirstResult();
-                                if (defaultProcActor == null) {
-                                    defaultProcActor = metadata.create(TsDefaultProcActor.class);
-
-                                    defaultProcActor.setProcRole(procRole);
-                                    defaultProcActor.setStrategyId(CardAuthorProcessActorStrategy.NAME);
-
-                                    em.persist(defaultProcActor);
-                                }
-                                break;
-                            case "Согласующий":
-                                procRole.setRole(roleEndorsement);
-                                procRole.setSortOrder(1);
-                                break;
-                            case "Утверждающий":
-                                procRole.setRole(roleApprover);
-                                procRole.setMultiUser(false);
-                                procRole.setSortOrder(2);
-                                break;
-
-                        }
-                        procRole.setName(messages.getMessage(getClass(), procRole.getCode()));
-                    }
-                    em.merge(proc);
-                }
-
-                return null;
-            }
-        });
-
-        return result;
-    }
+//    @Override
+//    @Authenticated // TO DO
+//    public String deployApprovalProcess() {
+//        String result = deployProcesses(Collections.singletonList("Утверждения заявки"));
+//        persistence.createTransaction().execute(new Transaction.Callable<Object>() {
+//            @Override
+//            public Object call(EntityManager em) {
+//                Proc proc = (Proc) em.createQuery("select p from wf$Proc p where p.name = :name").setParameter("name", "Утверждения заявки").setView(Proc.class, "edit").getFirstResult();
+//                if (proc != null) {
+//                    Role roleInitiator = (Role) em.createQuery("select r from sec$Role r where r.name='invoice_initiator'").getFirstResult();
+//
+//                    Role roleEndorsement = (Role) em.createQuery("select r from sec$Role r where r.name='invoice_endorsement'").getFirstResult();
+//                    Role roleApprover = (Role) em.createQuery("select r from sec$Role r where r.name='invoice_approver'").getFirstResult();
+//                    for (ProcRole procRole : proc.getRoles()) {
+//                        switch (procRole.getCode()) {
+//                            case "Инициатор":
+//                                procRole.setRole(roleInitiator);
+//                                procRole.setSortOrder(0);
+//
+//                                TsDefaultProcActor defaultProcActor = (TsDefaultProcActor) em.createQuery("select dpa from ts$DefaultProcActor dpa where dpa.strategyId =:strategy and dpa.procRole.id = :procRole").setParameter("strategy", CardAuthorProcessActorStrategy.NAME).setParameter("procRole", procRole.getId()).getFirstResult();
+//                                if (defaultProcActor == null) {
+//                                    defaultProcActor = metadata.create(TsDefaultProcActor.class);
+//
+//                                    defaultProcActor.setProcRole(procRole);
+//                                    defaultProcActor.setStrategyId(CardAuthorProcessActorStrategy.NAME);
+//
+//                                    em.persist(defaultProcActor);
+//                                }
+//                                break;
+//                            case "Согласующий":
+//                                procRole.setRole(roleEndorsement);
+//                                procRole.setSortOrder(1);
+//                                break;
+//                            case "Утверждающий":
+//                                procRole.setRole(roleApprover);
+//                                procRole.setMultiUser(false);
+//                                procRole.setSortOrder(2);
+//                                break;
+//
+//                        }
+//                        procRole.setName(messages.getMessage(getClass(), procRole.getCode()));
+//                    }
+//                    em.merge(proc);
+//                }
+//
+//                return null;
+//            }
+//        });
+//
+//        return result;
+//    }
 
     protected void checkForFirstInit() {
         Transaction tx = persistence.createTransaction();
