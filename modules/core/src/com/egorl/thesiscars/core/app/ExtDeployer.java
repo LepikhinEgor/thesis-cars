@@ -24,10 +24,13 @@ import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.security.app.Authenticated;
 
 import java.io.File;
+
 import org.apache.commons.io.IOUtils;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
+
 import org.dom4j.Document;
 import org.dom4j.Element;
 import com.haulmont.bali.util.Dom4j;
@@ -40,8 +43,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.exception.ExceptionUtils;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 
 
 import javax.annotation.ManagedBean;
@@ -73,6 +76,58 @@ public class ExtDeployer extends AbstractDeployer implements ExtDeployerMBean {
             public void applicationStopped() {
             }
         });
+    }
+
+    @Override
+    @Authenticated // TO DO
+    public String deployApprovalProcess() {
+        String result = deployProcesses(Collections.singletonList("Утверждения заявки"));
+        persistence.createTransaction().execute(new Transaction.Callable<Object>() {
+            @Override
+            public Object call(EntityManager em) {
+                Proc proc = (Proc) em.createQuery("select p from wf$Proc p where p.name = :name").setParameter("name", "Утверждения заявки").setView(Proc.class, "edit").getFirstResult();
+                if (proc != null) {
+                    Role roleInitiator = (Role) em.createQuery("select r from sec$Role r where r.name='invoice_initiator'").getFirstResult();
+
+                    Role roleEndorsement = (Role) em.createQuery("select r from sec$Role r where r.name='invoice_endorsement'").getFirstResult();
+                    Role roleApprover = (Role) em.createQuery("select r from sec$Role r where r.name='invoice_approver'").getFirstResult();
+                    for (ProcRole procRole : proc.getRoles()) {
+                        switch (procRole.getCode()) {
+                            case "Инициатор":
+                                procRole.setRole(roleInitiator);
+                                procRole.setSortOrder(0);
+
+                                TsDefaultProcActor defaultProcActor = (TsDefaultProcActor) em.createQuery("select dpa from ts$DefaultProcActor dpa where dpa.strategyId =:strategy and dpa.procRole.id = :procRole").setParameter("strategy", CardAuthorProcessActorStrategy.NAME).setParameter("procRole", procRole.getId()).getFirstResult();
+                                if (defaultProcActor == null) {
+                                    defaultProcActor = metadata.create(TsDefaultProcActor.class);
+
+                                    defaultProcActor.setProcRole(procRole);
+                                    defaultProcActor.setStrategyId(CardAuthorProcessActorStrategy.NAME);
+
+                                    em.persist(defaultProcActor);
+                                }
+                                break;
+                            case "Согласующий":
+                                procRole.setRole(roleEndorsement);
+                                procRole.setSortOrder(1);
+                                break;
+                            case "Утверждающий":
+                                procRole.setRole(roleApprover);
+                                procRole.setMultiUser(false);
+                                procRole.setSortOrder(2);
+                                break;
+
+                        }
+                        procRole.setName(messages.getMessage(getClass(), procRole.getCode()));
+                    }
+                    em.merge(proc);
+                }
+
+                return null;
+            }
+        });
+
+        return result;
     }
 
     protected void checkForFirstInit() {
@@ -121,13 +176,13 @@ public class ExtDeployer extends AbstractDeployer implements ExtDeployerMBean {
             tx.end();
         }
     }
-    
+
     @Authenticated
     public String initDefault(String password) {
         if (password != null && initDefaultPassword.equals(DigestUtils.md5Hex(password))) {
             try {
                 executeInitScripts();
-                
+
                 initExtensionDocumentsFunctionality();
                 initStandardFilters();
                 entityLogAPI.invalidateCache();
@@ -150,14 +205,14 @@ public class ExtDeployer extends AbstractDeployer implements ExtDeployerMBean {
             }
         }
     }
-    
+
 
     public String initExtensionDocumentsFunctionality() {
         ArrayList<String> procCodes = Lists.newArrayList("Endorsement", "Resolution", "Acquaintance", "Registration");
         ArrayList<String> reportCodes = Lists.newArrayList("EndorsementList");
 
         String extensionDocuments = AppContext.getProperty("ext.extensionDocuments");
-        if(extensionDocuments == null || extensionDocuments.isEmpty())
+        if (extensionDocuments == null || extensionDocuments.isEmpty())
             return "No extension documents found";
 
         String[] extDocMetaClasses = extensionDocuments.split(",");
@@ -171,7 +226,7 @@ public class ExtDeployer extends AbstractDeployer implements ExtDeployerMBean {
             for (Proc proc : procs) {
                 String cardTypes = proc.getCardTypes();
                 for (String metaClass : extDocMetaClasses)
-                    if(!cardTypes.contains(metaClass))
+                    if (!cardTypes.contains(metaClass))
                         cardTypes += metaClass + ",";
 
                 proc.setCardTypes(cardTypes);
@@ -194,7 +249,7 @@ public class ExtDeployer extends AbstractDeployer implements ExtDeployerMBean {
                         }
                     });
 
-                    if(!oReportScreen.isPresent()) {
+                    if (!oReportScreen.isPresent()) {
                         ReportScreen reportScreen = new ReportScreen();
                         reportScreen.setReport(reportFromXml);
                         reportScreen.setScreenId(screenId);
@@ -266,6 +321,6 @@ public class ExtDeployer extends AbstractDeployer implements ExtDeployerMBean {
             logout();
         }
     }
-    
-    
+
+
 }
