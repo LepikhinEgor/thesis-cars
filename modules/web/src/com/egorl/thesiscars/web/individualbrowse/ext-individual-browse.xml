@@ -3,5 +3,32 @@
         class="com.egorl.thesiscars.web.individualbrowse.ExtIndividualBrowser"
         extends="com/haulmont/thesis/web/ui/individual/individual-browse.xml"
         messagesPack="com.egorl.thesiscars.web.individualbrowse">
-    <layout/>
+<!--    <layout-->
+<!--            spacing="true">-->
+<!--        <vbox id="table-panel">-->
+<!--            <groupTable id="individualsTable"-->
+<!--                        aggregatable="true">-->
+<!--                <actions>-->
+<!--                    <action id="excel"/>-->
+<!--                </actions>-->
+<!--                <rows datasource="individualsDs"/>-->
+<!--                <columns>-->
+<!--                    <column visible="false" id="f"/>-->
+<!--                </columns>-->
+<!--                <rowsCount/>-->
+<!--                <buttonsPanel id="buttonsPanel"-->
+<!--                              alwaysVisible="true">-->
+<!--                    <button id="createBtn" action="individualsTable.create"/>-->
+<!--                    <button id="editBtn" action="individualsTable.edit"/>-->
+<!--                    <button id="removeBtn" action="individualsTable.remove"/>-->
+<!--                    <button id="excelButton" action="individualsTable.excel"/>-->
+<!--                </buttonsPanel>-->
+<!--            </groupTable>-->
+<!--            <hbox id="lookupActions" spacing="true" visible="false">-->
+<!--                <button action="lookupSelectAction"/>-->
+<!--                <button action="lookupCancelAction"/>-->
+<!--            </hbox>-->
+<!--        </vbox>-->
+<!--    </layout>-->
+        <layout/>
 </window>

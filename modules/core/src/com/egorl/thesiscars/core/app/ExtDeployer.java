@@ -79,7 +79,7 @@ public class ExtDeployer extends AbstractDeployer implements ExtDeployerMBean {
     }
 
 //    @Override
-//    @Authenticated // TO DO
+//    @Authenticated
 //    public String deployApprovalProcess() {
 //        String result = deployProcesses(Collections.singletonList("Утверждения заявки"));
 //        persistence.createTransaction().execute(new Transaction.Callable<Object>() {
@@ -126,7 +126,7 @@ public class ExtDeployer extends AbstractDeployer implements ExtDeployerMBean {
 //                return null;
 //            }
 //        });
-//
+
 //        return result;
 //    }
 
