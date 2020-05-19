@@ -42,7 +42,7 @@ public class ExtIndividualBrowser extends IndividualBrowser {
             }
         });
 
-//        individualsTable.getColumn("requestsCount").setCaption(getMessage("requestsCount"));
+        individualsTable.getColumn("requestsCount").setCaption(getMessage("requestsCount"));
     }
 
     private String getRequestCount(Individual individual) {
