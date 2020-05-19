@@ -7,9 +7,12 @@ import com.egorl.thesiscars.service.ContractorRequestsService;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.components.Action;
 import com.haulmont.cuba.gui.components.Component;
+import com.haulmont.cuba.gui.components.Label;
 import com.haulmont.cuba.gui.components.Table;
 import com.haulmont.cuba.gui.components.actions.ExcelAction;
+import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import com.haulmont.thesis.core.entity.Company;
+import com.haulmont.thesis.core.entity.Contractor;
 import com.haulmont.thesis.web.ui.company.CompanyBrowser;
 
 import javax.inject.Inject;
@@ -22,6 +25,9 @@ public class ExtCompanyBrowser extends CompanyBrowser {
 
     @Inject
     ContractorRequestsService contractorRequestsService;
+
+    @Inject
+    ComponentsFactory factory;
 
     @Override
     public void init(Map<String, Object> params) {
@@ -42,13 +48,20 @@ public class ExtCompanyBrowser extends CompanyBrowser {
                 return getRequestCount(item);
             }
         });
-
-//        companiesTable.getColumn("requestsCount").setCaption(getMessage("requestsCount"));
+        
+        companiesTable.getColumn("requestsCount").setCaption(getMessage("requestsCount"));
     }
 
     private String getRequestCount(Company company) {
         int requestsCount = contractorRequestsService.getContractorPurchaseRequests(company).size();
 
         return Integer.toString(requestsCount);
+    }
+
+    private Component generateRequestsColumn(Company contractor) {
+        Label label = factory.createComponent(Label.NAME);
+        label.setValue(getRequestCount(contractor));
+
+        return label;
     }
 }

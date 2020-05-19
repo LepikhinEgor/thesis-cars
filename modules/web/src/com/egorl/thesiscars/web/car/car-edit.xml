@@ -85,7 +85,7 @@
                                         <fieldGroup id="fieldGroup"
                                                     datasource="cardDs"
                                                     stylename="thesis-separator"
-                                                    width="${bigFieldWidth}">
+                                                    width="550px">
                                             <column width="250px">
                                                 <field id="number"/>
                                                 <field id="carMake"
@@ -175,18 +175,18 @@
                             <vbox id="actionsPane"
                                   margin="true,true,true,false"
                                   stylename="edit-area"
-                                  width="${rightPanelWidth}">
+                                  width="200px">
                                 <iframe id="actionsFrame"
                                         screen="actionsFrame"/>
                             </vbox>
                             <iframe id="startProcessButtonsFrame"
                                     screen="startProcessButtonsFrame"
-                                    width="${rightPanelWidth}"/>
+                                    width="200px"/>
                             <vbox id="otherActions"
                                   margin="true,true,true,false"
                                   spacing="true"
                                   stylename="edit-area"
-                                  width="${rightPanelWidth}">
+                                  width="200px">
                                 <popupButton id="createSubCardButton"
                                              caption="msg://actions.Create"
                                              width="100%"/>

@@ -52,6 +52,15 @@ public class Car extends TsCard {
 
     @Column(name = "TYPE_")
     protected Integer type;
+    public CarType getType() {
+        return type == null ? null : CarType.fromId(type);
+    }
+
+    public void setType(CarType type) {
+        this.type = type == null ? null : type.getId();
+    }
+
+
 
     public void setNumber(String number) {
         this.number = number;
@@ -93,13 +102,7 @@ public class Car extends TsCard {
         return cost;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
-    }
 
-    public Integer getType() {
-        return type;
-    }
 
 
 }

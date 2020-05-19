@@ -3,30 +3,30 @@
         class="com.egorl.thesiscars.web.companybrowse.ExtCompanyBrowser"
         extends="com/haulmont/thesis/web/ui/company/company-browse.xml"
         messagesPack="com.egorl.thesiscars.web.companybrowse">
-<!--    <layout expand="individualsTable"-->
-<!--            spacing="true">-->
-<!--        <vbox>-->
-<!--            <groupTable id="individualsTable"-->
-<!--                        width="100%"-->
-<!--                        aggregatable="true">-->
-<!--                <actions>-->
-<!--                    <action id="excel">-->
-<!--                    </action>-->
-<!--                </actions>-->
-<!--                <rowsCount/>-->
-<!--                <buttonsPanel id="buttonsPanel"-->
-<!--                              alwaysVisible="true">-->
-<!--                    <button id="createBtn" action="individualsTable.create"/>-->
-<!--                    <button id="editBtn" action="individualsTable.edit"/>-->
-<!--                    <button id="removeBtn" action="individualsTable.remove"/>-->
-<!--                    <button id="excelButton" action="individualsTable.excel"/>-->
-<!--                </buttonsPanel>-->
-<!--            </groupTable>-->
-<!--            <hbox id="lookupActions" spacing="true" visible="false">-->
-<!--                <button action="lookupSelectAction"/>-->
-<!--                <button action="lookupCancelAction"/>-->
-<!--            </hbox>-->
-<!--        </vbox>-->
-<!--    </layout>-->
+    <!--    <layout expand="individualsTable"-->
+    <!--            spacing="true">-->
+    <!--        <vbox>-->
+    <!--            <groupTable id="individualsTable"-->
+    <!--                        width="100%"-->
+    <!--                        aggregatable="true">-->
+    <!--                <actions>-->
+    <!--                    <action id="excel">-->
+    <!--                    </action>-->
+    <!--                </actions>-->
+    <!--                <rowsCount/>-->
+    <!--                <buttonsPanel id="buttonsPanel"-->
+    <!--                              alwaysVisible="true">-->
+    <!--                    <button id="createBtn" action="individualsTable.create"/>-->
+    <!--                    <button id="editBtn" action="individualsTable.edit"/>-->
+    <!--                    <button id="removeBtn" action="individualsTable.remove"/>-->
+    <!--                    <button id="excelButton" action="individualsTable.excel"/>-->
+    <!--                </buttonsPanel>-->
+    <!--            </groupTable>-->
+    <!--            <hbox id="lookupActions" spacing="true" visible="false">-->
+    <!--                <button action="lookupSelectAction"/>-->
+    <!--                <button action="lookupCancelAction"/>-->
+    <!--            </hbox>-->
+    <!--        </vbox>-->
+    <!--    </layout>-->
     <layout/>
 </window>
