@@ -7,6 +7,22 @@
             <role>manager</role>
             <role>Administrators</role>
         </roles>
+        <quantityScript>com/egorl/thesiscars/scripts/OnNewsCountScript.groovy</quantityScript>
+        <cardsSelectScript>com/egorl/thesiscars/scripts/OnNewsSelectScript.groovy</cardsSelectScript>
+        <filterQuery>
+
+        </filterQuery>
+    </folder>
+    <folder>
+        <name>requests.assigned</name>
+        <sortOrder>5</sortOrder>
+        <entity>cars$CarPurchaseRequest</entity>
+        <roles>
+            <role>manager</role>
+            <role>master</role>
+            <role>bank_operator</role>
+            <role>Administrators</role>
+        </roles>
         <quantityScript>com/egorl/thesiscars/scripts/OnAssignedCountScript.groovy</quantityScript>
         <cardsSelectScript>com/egorl/thesiscars/scripts/OnAssignedSelectScript.groovy</cardsSelectScript>
         <filterQuery>
