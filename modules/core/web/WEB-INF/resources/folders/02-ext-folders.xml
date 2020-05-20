@@ -1,0 +1,16 @@
+<folders xlmns="http://schemas.haulmont.com/thesis/4.0/folders.xsd">
+    <folder>
+        <name>requests.new</name>
+        <sortOrder>4</sortOrder>
+        <entity>cars$CarPurchaseRequest</entity>
+        <roles>
+            <role>manager</role>
+            <role>Administrators</role>
+        </roles>
+        <quantityScript>com/egorl/thesiscars/scripts/OnAssignedCountScript.groovy</quantityScript>
+        <cardsSelectScript>com/egorl/thesiscars/scripts/OnAssignedSelectScript.groovy</cardsSelectScript>
+        <filterQuery>
+
+        </filterQuery>
+    </folder>
+</folders>
