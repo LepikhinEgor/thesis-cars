@@ -1,5 +1,10 @@
 package com.egorl.thesiscars.core.app;
 
+import com.haulmont.cuba.core.global.Messages;
+import com.haulmont.cuba.security.entity.Role;
+import com.haulmont.thesis.core.app.defaultprocactors.CardAuthorProcessActorStrategy;
+import com.haulmont.thesis.core.entity.defaultactor.TsDefaultProcActor;
+import com.haulmont.workflow.core.entity.ProcRole;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
 import org.apache.commons.logging.Log;
@@ -44,15 +49,12 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
-import java.util.ArrayList;
+import java.util.*;
 
 
 import javax.annotation.ManagedBean;
 import javax.inject.Inject;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 import java.io.File;
 
 
@@ -62,6 +64,9 @@ public class ExtDeployer extends AbstractDeployer implements ExtDeployerMBean {
     protected Log log = LogFactory.getLog(ExtDeployer.class);
     @Inject
     protected EntityLogAPI entityLogAPI;
+
+    @Inject
+    Messages messages;
 
     public ExtDeployer() {
         createAppContextListener();
@@ -78,57 +83,58 @@ public class ExtDeployer extends AbstractDeployer implements ExtDeployerMBean {
         });
     }
 
-//    @Override
-//    @Authenticated
-//    public String deployApprovalProcess() {
-//        String result = deployProcesses(Collections.singletonList("Утверждения заявки"));
-//        persistence.createTransaction().execute(new Transaction.Callable<Object>() {
-//            @Override
-//            public Object call(EntityManager em) {
-//                Proc proc = (Proc) em.createQuery("select p from wf$Proc p where p.name = :name").setParameter("name", "Утверждения заявки").setView(Proc.class, "edit").getFirstResult();
-//                if (proc != null) {
-//                    Role roleInitiator = (Role) em.createQuery("select r from sec$Role r where r.name='invoice_initiator'").getFirstResult();
-//
-//                    Role roleEndorsement = (Role) em.createQuery("select r from sec$Role r where r.name='invoice_endorsement'").getFirstResult();
-//                    Role roleApprover = (Role) em.createQuery("select r from sec$Role r where r.name='invoice_approver'").getFirstResult();
-//                    for (ProcRole procRole : proc.getRoles()) {
-//                        switch (procRole.getCode()) {
-//                            case "Инициатор":
-//                                procRole.setRole(roleInitiator);
-//                                procRole.setSortOrder(0);
-//
-//                                TsDefaultProcActor defaultProcActor = (TsDefaultProcActor) em.createQuery("select dpa from ts$DefaultProcActor dpa where dpa.strategyId =:strategy and dpa.procRole.id = :procRole").setParameter("strategy", CardAuthorProcessActorStrategy.NAME).setParameter("procRole", procRole.getId()).getFirstResult();
-//                                if (defaultProcActor == null) {
-//                                    defaultProcActor = metadata.create(TsDefaultProcActor.class);
-//
-//                                    defaultProcActor.setProcRole(procRole);
-//                                    defaultProcActor.setStrategyId(CardAuthorProcessActorStrategy.NAME);
-//
-//                                    em.persist(defaultProcActor);
-//                                }
-//                                break;
-//                            case "Согласующий":
-//                                procRole.setRole(roleEndorsement);
-//                                procRole.setSortOrder(1);
-//                                break;
-//                            case "Утверждающий":
-//                                procRole.setRole(roleApprover);
-//                                procRole.setMultiUser(false);
-//                                procRole.setSortOrder(2);
-//                                break;
-//
-//                        }
-//                        procRole.setName(messages.getMessage(getClass(), procRole.getCode()));
-//                    }
-//                    em.merge(proc);
-//                }
-//
-//                return null;
-//            }
-//        });
 
-//        return result;
-//    }
+    @Authenticated
+    public String deployApprovalProcess() {
+        String result = deployProcesses(Collections.singletonList("Утверждения заявки"));
+        persistence.createTransaction().execute(new Transaction.Callable<Object>() {
+            @Override
+            public Object call(EntityManager em) {
+                Proc proc = (Proc) em.createQuery("select p from wf$Proc p where p.name = :name").setParameter("name", "Утверждения заявки").setView(Proc.class, "edit").getFirstResult();
+                if (proc != null) {
+                    Role roleManager = (Role) em.createQuery("select r from sec$Role r where r.name='manager'").getFirstResult();
+
+                    Role roleBankOperator = (Role) em.createQuery("select r from sec$Role r where r.name='bank_operator'").getFirstResult();
+                    Role roleMaster = (Role) em.createQuery("select r from sec$Role r where r.name='master'").getFirstResult();
+                    for (ProcRole procRole : proc.getRoles()) {
+                        switch (procRole.getCode()) {
+                            case "Менеджер":
+                                procRole.setRole(roleManager);
+                                procRole.setSortOrder(0);
+
+                                TsDefaultProcActor defaultProcActor = (TsDefaultProcActor) em.createQuery("select dpa from ts$DefaultProcActor dpa where dpa.strategyId =:strategy and dpa.procRole.id = :procRole").setParameter("strategy", CardAuthorProcessActorStrategy.NAME).setParameter("procRole", procRole.getId()).getFirstResult();
+                                if (defaultProcActor == null) {
+                                    defaultProcActor = metadata.create(TsDefaultProcActor.class);
+
+                                    defaultProcActor.setProcRole(procRole);
+                                    defaultProcActor.setStrategyId(CardAuthorProcessActorStrategy.NAME);
+
+                                    em.persist(defaultProcActor);
+                                }
+                                break;
+                            case "Оператор банка":
+                                procRole.setRole(roleBankOperator);
+                                procRole.setSortOrder(1);
+                                break;
+                            case "Мастер":
+                                procRole.setRole(roleMaster);
+                                procRole.setMultiUser(false);
+                                procRole.setSortOrder(2);
+                                break;
+
+                        }
+                        procRole.setName(messages.getMessage(getClass(), procRole.getCode()));
+                    }
+                    em.merge(proc);
+                }
+
+
+                return null;
+            }
+        });
+
+        return result;
+    }
 
     protected void checkForFirstInit() {
         Transaction tx = persistence.createTransaction();
@@ -179,19 +185,17 @@ public class ExtDeployer extends AbstractDeployer implements ExtDeployerMBean {
 
     @Authenticated
     public String initDefault(String password) {
-        if (password != null && initDefaultPassword.equals(DigestUtils.md5Hex(password))) {
-            try {
-                executeInitScripts();
+        try {
+            executeInitScripts();
 
-                initExtensionDocumentsFunctionality();
-                initStandardFilters();
-                entityLogAPI.invalidateCache();
-                return INIT_SUCESS;
-            } catch (Exception e) {
-                return ExceptionUtils.getStackTrace(e);
-            }
+            initExtensionDocumentsFunctionality();
+            initStandardFilters();
+            entityLogAPI.invalidateCache();
+            deployApprovalProcess();
+            return INIT_SUCESS;
+        } catch (Exception e) {
+            return ExceptionUtils.getStackTrace(e);
         }
-        return "Error password";
     }
 
     protected void executeInitScripts() {
